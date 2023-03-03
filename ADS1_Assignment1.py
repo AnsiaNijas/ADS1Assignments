@@ -9,25 +9,37 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def readLinePlotData() :
+def readLinePlotData():
   df_Food_Prices = pd.read_excel("Food_Prices_For_Nutrition.xlsx")
-  df_Food_Prices_updated=df_Food_Prices.iloc[0:4,:]
-  return df_Food_Prices_updated    
-    
-    
-    
-def linePlot(df) :
-    df_Food_Prices_updated=df
+  df_Food_Prices_updated = df_Food_Prices.iloc[0:4, :]
+  return df_Food_Prices_updated
+
+
+def readPiePlotData():
+  df_Food_Prices = pd.read_excel("Food_Prices_For_Nutrition.xlsx")
+  df_Food_Prices_t = pd.DataFrame.transpose(df_Food_Prices)
+  df_Food_Prices_updated = df_Food_Prices_t.iloc[[82, 108, 109, 185]]
+  header = df_Food_Prices.iloc[0:11, 4].astype(str)
+  df_Food_Prices_updated.columns = header
+  return df_Food_Prices_updated
+
+
+def linePlot(df):
+    df_Food_Prices_updated = df
     plt.figure()
-    plt.plot(df_Food_Prices_updated['Time'], df_Food_Prices_updated["Iran, Islamic Rep. [IRN]"], linestyle='-', label="Iran")
-    plt.plot(df_Food_Prices_updated['Time'], df_Food_Prices_updated["Middle East & North Africa [MEA]"],linestyle='-.', label="Middle East & North Africa")
-    plt.plot(df_Food_Prices_updated['Time'], df_Food_Prices_updated["China [CHN]"], label="China")
-    plt.plot(df_Food_Prices_updated['Time'], df_Food_Prices_updated["United Kingdom [GBR]"],linestyle=':', label="United Kingdom")
-    plt.plot(df_Food_Prices_updated['Time'], df_Food_Prices_updated["Nigeria [NGA]"],linestyle='--', label="Nigeria")
-    
-    plt.ylim(-20,400)
-    plt.xlim(2017,2020)
-    plt.xticks([2017,2018,2019,2020],[2017,2018,2019,2020])
+    plt.plot(df_Food_Prices_updated['Time'],
+             df_Food_Prices_updated["Iran, Islamic Rep. [IRN]"], linestyle='-', label="Iran")
+    plt.plot(df_Food_Prices_updated['Time'], df_Food_Prices_updated["Middle East & North Africa [MEA]"],
+             linestyle='-.', label="Middle East & North Africa")
+    plt.plot(df_Food_Prices_updated['Time'],
+             df_Food_Prices_updated["China [CHN]"], label="China")
+    plt.plot(df_Food_Prices_updated['Time'], df_Food_Prices_updated["United Kingdom [GBR]"],
+             linestyle=':', label="United Kingdom")
+    plt.plot(df_Food_Prices_updated['Time'],
+             df_Food_Prices_updated["Nigeria [NGA]"], linestyle='--', label="Nigeria")
+    plt.ylim(-20, 400)
+    plt.xlim(2017, 2020)
+    plt.xticks([2017, 2018, 2019, 2020], [2017, 2018, 2019, 2020])
     plt.xlabel("Year")
     plt.ylabel("Number of People (millions")
     plt.title("Millions of people unable to afford a healthy diet")
@@ -35,14 +47,20 @@ def linePlot(df) :
     plt.savefig('LinePlot.jpg')
     plt.show()
     return
-   
-    
-   
 
-if __name__== "__main__" :
+
+def piePlot(df):
+    food_prices = df
+    names = ["High income [HIC]", "Low income [LIC] ", "Lower middle income [LMC]",
+             "Upper middle income [UMC]"]
+    plt.figure()
+    plt.pie(food_prices['2020.0'], labels=names)
+    plt.title("Population who cannot afford a healthy diet (millions) in 2020")
+    plt.savefig("PiePlot.png")
+    plt.show()
+    return
+
+
+if __name__ == "__main__":
     linePlot(readLinePlotData())
-
-
-
-
-
+    piePlot(readPiePlotData())
