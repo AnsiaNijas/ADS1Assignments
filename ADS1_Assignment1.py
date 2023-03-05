@@ -25,11 +25,18 @@ def readPiePlotData():
 
 
 def readStackedBarPlotData():
+    """ 
+    Function to read csv report and returns updated Dataframe
+    """
     df_illiterate_population = pd.read_csv("Youth illiterate population.csv")
     return df_illiterate_population
 
 
 def linePlot(df):
+    """ 
+    Function to plot lineplot of Evolution of Population who cannot afford a healthy diet
+    Arguments: A dataframe
+    """
     df_Food_Prices_updated = df
     plt.figure()
     plt.plot(df_Food_Prices_updated['Time'],
@@ -46,9 +53,9 @@ def linePlot(df):
     plt.xlim(2017, 2020)
     plt.xticks([2017, 2018, 2019, 2020], [2017, 2018, 2019, 2020])
     plt.xlabel("Year")
-    plt.ylabel("Population (millions")
+    plt.ylabel("Population (millions)")
     plt.title(
-        "Population who cannot afford a healthy diet in past 4 years for different countries")
+        "Evolution of Population who cannot afford a healthy diet")
     plt.legend(loc='upper right')
     plt.savefig('LinePlot.jpg')
     plt.show()
@@ -56,6 +63,10 @@ def linePlot(df):
 
 
 def piePlot(df):
+    """ 
+    Function to plot Pieplot of Population who cannot afford a healthy diet (millions) in 2019
+    Arguments: A dataframe
+    """
     food_prices = df
     names = ["High income [HIC]", "Low income [LIC] ", "Lower middle income [LMC]",
              "Upper middle income [UMC]"]
@@ -73,15 +84,21 @@ def piePlot(df):
 
 
 def stackedBarPlot(df):
+    """ 
+    Function to plot StackedBarplot of Youth illetrate population of men and women
+    Arguments: A dataframe
+    """
     illiterate_population = df
     plt.figure()
     plt.bar(illiterate_population["Time"],
             illiterate_population["Youth illiterate population, 15-24 years, male (number) [UIS.LP.AG15T24.M]"], width=.5, label="Male")
     plt.bar(illiterate_population["Time"], illiterate_population["Youth illiterate population, 15-24 years, female (number) [UIS.LP.AG15T24.F]"],
             bottom=illiterate_population["Youth illiterate population, 15-24 years, male (number) [UIS.LP.AG15T24.M]"], width=.5, label="Female")
-    plt.title("Youth illiterate population")
+    plt.title("Youth illiterate population of Male and Female")
     plt.xlabel("Year")
     plt.ylabel("Population (millions)")
+    plt.ylim(0, 500000)
+    plt.yticks([100000, 200000, 300000, 400000], [10, 20, 30, 40])
     plt.legend()
     plt.savefig("StackedBarPlot.png")
     plt.show()
@@ -89,6 +106,9 @@ def stackedBarPlot(df):
 
 
 if __name__ == "__main__":
+    #calling function to visualize LinePlots by passing arguments as dataframe
     linePlot(readLinePlotData())
+    #calling function to visualize PiePlots by passing arguments as dataframe
     piePlot(readPiePlotData())
+    #calling function to visualize StackedBarPlots by passing arguments as dataframe
     stackedBarPlot(readStackedBarPlotData())
