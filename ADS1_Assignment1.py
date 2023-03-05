@@ -97,8 +97,9 @@ def stackedBarPlot(df):
     plt.title("Youth illiterate population of Male and Female")
     plt.xlabel("Year")
     plt.ylabel("Population (millions)")
+    
     plt.ylim(0, 500000)
-    plt.yticks([100000, 200000, 300000, 400000], [10, 20, 30, 40])
+    plt.yticks([100000, 200000, 300000, 400000,500000], [10, 20, 30, 40,50])
     plt.legend()
     plt.savefig("StackedBarPlot.png")
     plt.show()
